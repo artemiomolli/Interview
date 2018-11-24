@@ -22,3 +22,26 @@ class Utils {
         viewController.present(alertController, animated: true, completion: nil)
     }
 }
+
+protocol CustomNavigationBar {
+    
+    func popAction()
+}
+
+extension UIViewController:CustomNavigationBar {
+    
+    @objc func popAction() {
+        
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension CustomNavigationBar where Self: UIViewController {
+    
+    func configureBackPopButton() {
+        
+        let backButton = UIBarButtonItem(image: UIImage(named:"ic_ab_back"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(popAction))
+        
+        self.navigationItem.leftBarButtonItem = backButton
+    }
+}
